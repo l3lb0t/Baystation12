@@ -196,7 +196,7 @@
 /obj/machinery/shipsensors
 	name = "sensors suite"
 	desc = "Long range gravity scanner with various other sensors, used to detect irregularities in surrounding space. Can only run in vacuum to protect delicate quantum BS elements."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/shipsensors.dmi'
 	icon_state = "sensors"
 	anchored = TRUE
 	density = TRUE
@@ -250,14 +250,13 @@
 
 /obj/machinery/shipsensors/on_update_icon()
 	overlays.Cut()
+	if(panel_open)
+		overlays += "[icon_state]_panel"
 	if(use_power)
-		icon_state = "sensors"
+		overlays += emissive_appearance(icon, "[icon_state]_lights_working")
+		overlays += "[icon_state]_lights_working"
 	if(health_dead())
 		icon_state = "sensors_broken"
-	else
-		icon_state = "sensors_off"
-	if(panel_open)
-		overlays += "sensors_panel"
 	. = ..()
 
 /obj/machinery/shipsensors/proc/toggle()
